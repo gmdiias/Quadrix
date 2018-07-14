@@ -55,7 +55,6 @@ test(na_borda_superior, fail) :-
 
 test(na_borda_esquerda) :-
     jogo_quadrix(Jogo, 3, 3),
-    na_borda_esquerda(Jogo, 0),
     na_borda_esquerda(Jogo, 3),
     na_borda_esquerda(Jogo, 6).
 

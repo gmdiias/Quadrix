@@ -86,7 +86,8 @@ na_borda_superior(Jogo, Pos) :-
 %  na primeira coluna.
 
 na_borda_esquerda(Jogo, Pos) :-
-    Pos is 0.
+    Pos is 0,
+    !.
 
 na_borda_esquerda(Jogo, Pos) :-
     quadrix(_, Colunas, _) = Jogo,
