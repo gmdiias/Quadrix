@@ -71,6 +71,11 @@ test(pos_acima, A =:= 2) :-
     % a posição acima da posição 7 é a posição A =:= 2
     pos_acima(Jogo, 7, A).
 
+test(pos_esquerda, A =:= 6) :-
+    jogo_quadrix(Jogo, 3, 5),
+    % a posição acima da posição 7 é a posição A =:= 2
+    pos_esquerda(Jogo, 7, A).
+
 % posição 1
 %    5
 %  8   2

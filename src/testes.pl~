@@ -55,6 +55,7 @@ test(na_borda_superior, fail) :-
 
 test(na_borda_esquerda) :-
     jogo_quadrix(Jogo, 3, 3),
+    na_borda_esquerda(Jogo, 0),
     na_borda_esquerda(Jogo, 3),
     na_borda_esquerda(Jogo, 6).
 
@@ -69,6 +70,16 @@ test(pos_acima, A =:= 2) :-
     jogo_quadrix(Jogo, 3, 5),
     % a posição acima da posição 7 é a posição A =:= 2
     pos_acima(Jogo, 7, A).
+
+test(pos_esquerda, A =:= 6) :-
+    jogo_quadrix(Jogo, 3, 5),
+    % a posição acima da posição 7 é a posição A =:= 2
+    pos_esquerda(Jogo, 7, A).
+
+test(pos_esquerda, fail) :-
+    jogo_quadrix(Jogo, 3, 5),
+    pos_esquerda(Jogo, 5, A).
+
 
 % posição 1
 %    5

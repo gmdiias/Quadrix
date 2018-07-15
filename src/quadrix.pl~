@@ -57,7 +57,12 @@ blocos_correspondem(Jogo, Pos) :-
 %  superior, então a posição acima corresponde.
 
 corresponde_acima(Jogo, Pos) :-
-    _ = (Jogo, Pos), fail.
+    pos_acima(Jogo, Pos, PosAcima),
+    bloco_pos(Jogo, Pos, B1),
+    bloco_pos(Jogo, PosAcima, B2),
+    B2 = bloco(_, _, C1, _),
+    B1 = bloco(C2, _, _, _),
+    C1 =:= C2.
 
 %% corresponde_esquerda(+Jogo, +Pos) is semidet
 %
@@ -86,12 +91,9 @@ na_borda_superior(Jogo, Pos) :-
 %  na primeira coluna.
 
 na_borda_esquerda(Jogo, Pos) :-
-    Pos is 0,
-    !.
-
-na_borda_esquerda(Jogo, Pos) :-
     quadrix(_, Colunas, _) = Jogo,
-    0 is Pos mod Colunas, !.
+    A is Pos mod Colunas,
+    A =:= 0.
 
 %% pos_acima(+Jogo, +Pos, ?Acima) is semidet
 %
@@ -101,18 +103,19 @@ pos_acima(Jogo, Pos, Acima) :-
     na_borda_superior(Jogo, Pos), !,
     fail.
 
-pos_acima(Jogo, Pos, Esquerda) :-
+pos_acima(Jogo, Pos, Acima) :-
     quadrix(_, Colunas, _) = Jogo,
-    Esquerda is Pos - Colunas.
+    Acima is Pos - Colunas.
 
 
 %% pos_esquerda(+Jogo, +Pos, ?Esquerda) is semidet
 %
 %  Verdadeiro se a posição Esquerda está à esquerda de Pos em Jogo.
 
-pos_esquerda(Jogo, Pos, Esquerda) :-
 
-    _ = (Jogo, Pos, Esquerda), fail.
+pos_esquerda(Jogo, Pos, Esquerda) :-
+    \+ na_borda_esquerda(Jogo, Pos),
+    Esquerda is Pos - 1.
 
 
 %% bloco_pos(?Jogo, ?Pos, ?Bloco) is nondet
