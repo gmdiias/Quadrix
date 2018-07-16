@@ -5,7 +5,7 @@
 %
 %  run_tests(quadrix:na_borda_superior). % para executar o teste na_borda_superior
 %
-%  run_tests(quadrix).                   % para executar os testes básicos
+%  run_tests(quadrix).                   % Para executar os testes básicos
 %
 %  run_tests(quadrix_grandes).           % para executar os testes para os jogos grandes
 %
@@ -101,6 +101,23 @@ test(corresponde_acima, fail) :-
     bloco_pos(Jogo, 6, bloco(3, 4, 6, 9)),
     % não corresponde, no lugar do 3 deveria ser 7
     corresponde_acima(Jogo, 6).
+
+test(corresponde_esquerda) :-
+    jogo_quadrix(Jogo, 3, 5),
+    bloco_pos(Jogo, 5, bloco(5, 2, 7, 8)),
+    bloco_pos(Jogo, 6, bloco(7, 4, 6, 2)),
+    %---
+    corresponde_esquerda(Jogo, 0),
+    corresponde_esquerda(Jogo, 5),
+    %---
+    corresponde_esquerda(Jogo,6).
+
+test(corresponde_esquerda, fail):-
+    jogo_quadrix(Jogo, 3, 5),
+    bloco_pos(Jogo, 1, bloco(5, 2, 7, 8)),
+    bloco_pos(Jogo, 6, bloco(7, 4, 6, 3)),
+    corresponde_esquerda(Jogo,6).
+
 
 :- end_tests(quadrix).
 

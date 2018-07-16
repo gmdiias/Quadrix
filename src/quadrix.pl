@@ -75,7 +75,15 @@ corresponde_acima(Jogo, Pos) :-
 %  está na borda esquerda, então a posição à esquerda corresponde.
 
 corresponde_esquerda(Jogo, Pos) :-
-    _ = (Jogo, Pos), fail.
+    \+ pos_esquerda(Jogo, Pos, PosEsquerda), !.
+
+corresponde_esquerda(Jogo, Pos) :-
+    pos_esquerda(Jogo, Pos, PosEsquerda),
+    bloco_pos(Jogo, Pos, B1),
+    bloco_pos(Jogo, PosEsquerda, B2),
+    B2 = bloco(_, D1, _, _),
+    B1 = bloco(_, _, _, E2),
+    D1 =:= E2.
 
 
 %% na_borda_superior(+Jogo, +Pos) is semidet
@@ -117,7 +125,10 @@ pos_acima(Jogo, Pos, Acima) :-
 
 
 pos_esquerda(Jogo, Pos, Esquerda) :-
-    \+ na_borda_esquerda(Jogo, Pos),
+    na_borda_esquerda(Jogo, Pos), !,
+    fail.
+
+pos_esquerda(Jogo, Pos, Esquerda) :-
     Esquerda is Pos - 1.
 
 
