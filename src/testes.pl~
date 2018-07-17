@@ -107,16 +107,31 @@ test(corresponde_esquerda) :-
     bloco_pos(Jogo, 5, bloco(5, 2, 7, 8)),
     bloco_pos(Jogo, 6, bloco(7, 4, 6, 2)),
     %---
-    corresponde_esquerda(Jogo, 4),
+    corresponde_esquerda(Jogo, 0),
     corresponde_esquerda(Jogo, 5),
     %---
     corresponde_esquerda(Jogo,6).
 
-test(corresponde_esquerda, fail):-
+test(corresponde_esquerda, fail ):-
     jogo_quadrix(Jogo, 3, 5),
-    bloco_pos(Jogo, 1, bloco(5, 2, 7, 8)),
+    bloco_pos(Jogo, 5, bloco(5, 2, 7, 8)),
     bloco_pos(Jogo, 6, bloco(7, 4, 6, 3)),
     corresponde_esquerda(Jogo,6).
+
+test(blocos_correspondem) :-
+    jogo_quadrix(Jogo, 3, 5),
+    bloco_pos(Jogo, 1, bloco(1, 9, 5, 3)),
+    bloco_pos(Jogo, 5, bloco(7, 2, 4, 8)),
+    bloco_pos(Jogo, 6, bloco(5, 4, 6, 2)),
+    blocos_correspondem(Jogo,6).
+
+
+test(blocos_correspondem, fail) :-
+    jogo_quadrix(Jogo, 3, 5),
+    bloco_pos(Jogo, 1, bloco(5, 2, 7, 8)),
+    bloco_pos(Jogo, 5, bloco(4, 4, 4, 4)),
+    bloco_pos(Jogo, 6, bloco(7, 4, 6, 3)),
+    blocos_correspondem(Jogo,6).
 
 
 :- end_tests(quadrix).

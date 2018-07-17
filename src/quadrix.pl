@@ -47,7 +47,9 @@ solucao(Jogo, Blocos) :-
 %  maneira que suas bordas adjacentes tenham o mesmo número.
 
 blocos_correspondem(Jogo, Pos) :-
-    _ = (Jogo, Blocos), fail.
+    corresponde_acima(Jogo, Pos),
+    corresponde_esquerda(Jogo, Pos), !.
+
 
 %% corresponde_acima(+Jogo, +Pos) is semidet
 %
