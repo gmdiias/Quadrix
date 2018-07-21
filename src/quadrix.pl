@@ -36,9 +36,13 @@
 %  Verdadeiro se Jogo é um jogo quadrix válido para o conjunto Blocos.
 %  Blocos contém a lista de blocos que devem ser "colocadas" no Jogo.
 
-solucao(Jogo, Blocos) :-
-    _ = (Jogo, Blocos), fail.
+solucao(Jogo, []).
 
+solucao(Jogo, Blocos) :-
+   select(Elemento, Blocos, Resto),
+   once(bloco_pos(Jogo, Pos, Elemento)),
+   blocos_correspondem(Jogo, Pos),
+   solucao(Jogo, Resto).
 
 %% blocos_correspondem(?Jogo, ?Pos) is semidet
 %
@@ -49,7 +53,6 @@ solucao(Jogo, Blocos) :-
 blocos_correspondem(Jogo, Pos) :-
     corresponde_acima(Jogo, Pos),
     corresponde_esquerda(Jogo, Pos), !.
-
 
 %% corresponde_acima(+Jogo, +Pos) is semidet
 %
@@ -150,3 +153,14 @@ bloco_pos(Jogo, Pos, Bloco) :-
 jogo_quadrix(quadrix(Linhas, Colunas, Blocos), Linhas, Colunas) :-
     S is Linhas * Colunas,
     length(Blocos, S).
+
+
+
+
+
+
+
+
+
+
+
