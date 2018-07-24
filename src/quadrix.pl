@@ -35,20 +35,26 @@
 %
 %  Verdadeiro se Jogo é um jogo quadrix válido para o conjunto Blocos.
 %  Blocos contém a lista de blocos que devem ser "colocadas" no Jogo.
+%  Chama a gera_solucao passando a posicao inicial como 0.
 
-solucao2(Jogo, [], X) :-
+solucao(Jogo, Blocos) :-
+    gera_solucao(Jogo, Blocos, 0), !.
+
+%% solucao(?Jogo, +Blocos, +Pos) is semidet
+%
+%  Verdadeiro se Jogo é um jogo quadrix válido para o conjunto Blocos.
+%  Blocos contém a lista de blocos que devem ser "colocadas" no Jogo.
+%  Pos contém a posicao atual do Jogo.
+
+gera_solucao(_, [], _) :-
     !.
 
-solucao2(Jogo, Blocos, Pos) :-
+gera_solucao(Jogo, Blocos, Pos) :-
    select(Elemento, Blocos, Resto),
    bloco_pos(Jogo, Pos, Elemento),
    blocos_correspondem(Jogo, Pos),
-   Pos1 is Pos+1,
-   solucao2(Jogo, Resto, Pos1).
-
-solucao(Jogo, Blocos) :-
-    X is 0,
-    solucao2(Jogo, Blocos, X).
+   Pos0 is Pos+1,
+   gera_solucao(Jogo, Resto, Pos0).
 
 %% blocos_correspondem(?Jogo, ?Pos) is semidet
 %
@@ -58,7 +64,7 @@ solucao(Jogo, Blocos) :-
 
 blocos_correspondem(Jogo, Pos) :-
     corresponde_acima(Jogo, Pos),
-    corresponde_esquerda(Jogo, Pos), !.
+    corresponde_esquerda(Jogo, Pos).
 
 %% corresponde_acima(+Jogo, +Pos) is semidet
 %
@@ -68,7 +74,7 @@ blocos_correspondem(Jogo, Pos) :-
 %  superior, então a posição acima corresponde.
 
 corresponde_acima(Jogo, Pos) :-
-    \+ pos_acima(Jogo, Pos, PosAcima), !.
+    \+ pos_acima(Jogo, Pos, _), !.
 
 corresponde_acima(Jogo, Pos) :-
     pos_acima(Jogo, Pos, PosAcima),
@@ -86,7 +92,7 @@ corresponde_acima(Jogo, Pos) :-
 %  está na borda esquerda, então a posição à esquerda corresponde.
 
 corresponde_esquerda(Jogo, Pos) :-
-    \+ pos_esquerda(Jogo, Pos, PosEsquerda), !.
+    \+ pos_esquerda(Jogo, Pos, _), !.
 
 corresponde_esquerda(Jogo, Pos) :-
     pos_esquerda(Jogo, Pos, PosEsquerda),
@@ -121,7 +127,7 @@ na_borda_esquerda(Jogo, Pos) :-
 %
 %  Verdadeiro se a posição Acima está acima de Pos em Jogo.
 
-pos_acima(Jogo, Pos, Acima) :-
+pos_acima(Jogo, Pos, _) :-
     na_borda_superior(Jogo, Pos), !,
     fail.
 
@@ -135,11 +141,11 @@ pos_acima(Jogo, Pos, Acima) :-
 %  Verdadeiro se a posição Esquerda está à esquerda de Pos em Jogo.
 
 
-pos_esquerda(Jogo, Pos, Esquerda) :-
+pos_esquerda(Jogo, Pos, _) :-
     na_borda_esquerda(Jogo, Pos), !,
     fail.
 
-pos_esquerda(Jogo, Pos, Esquerda) :-
+pos_esquerda(_, Pos, Esquerda) :-
     Esquerda is Pos - 1.
 
 

@@ -106,16 +106,18 @@ test(corresponde_esquerda) :-
     jogo_quadrix(Jogo, 3, 5),
     bloco_pos(Jogo, 5, bloco(5, 2, 7, 8)),
     bloco_pos(Jogo, 6, bloco(7, 4, 6, 2)),
-    %---
+    % nao tem ninguem a esquerda de 0, portanto corresponde
     corresponde_esquerda(Jogo, 0),
+    % nao tem ninguem a esquerda de 5, portanto corresponde
     corresponde_esquerda(Jogo, 5),
-    %---
+    % na borda esquerda de 6 tem o 5, portanto corresponde
     corresponde_esquerda(Jogo,6).
 
 test(corresponde_esquerda, fail ):-
     jogo_quadrix(Jogo, 3, 5),
     bloco_pos(Jogo, 5, bloco(5, 2, 7, 8)),
     bloco_pos(Jogo, 6, bloco(7, 4, 6, 3)),
+    % nao corresponde, no lugar do 3 deveria ser 2
     corresponde_esquerda(Jogo,6).
 
 test(blocos_correspondem) :-
@@ -123,17 +125,40 @@ test(blocos_correspondem) :-
     bloco_pos(Jogo, 1, bloco(1, 9, 5, 3)),
     bloco_pos(Jogo, 5, bloco(7, 2, 4, 8)),
     bloco_pos(Jogo, 6, bloco(5, 4, 6, 2)),
+    % na borda esquerda do 6 tem o 5 e na borda superior de 6 tem o 1, portanto corresponde
     blocos_correspondem(Jogo, 6),
+    % na borda superior e esquerda do 0 nao tem ninguem, portanto corresponde
     blocos_correspondem(Jogo, 0).
-
 
 test(blocos_correspondem, fail) :-
     jogo_quadrix(Jogo, 3, 5),
     bloco_pos(Jogo, 1, bloco(5, 2, 7, 8)),
     bloco_pos(Jogo, 5, bloco(4, 4, 4, 4)),
     bloco_pos(Jogo, 6, bloco(7, 4, 6, 3)),
+    % na borda esquerda de 6 tem o 5 que nao corresponde
+    % na borda superior de 6 tem o 1 que nao corresponde
+    % portanto o teste deve falhar pois nenhum dos seus lados corresponde
     blocos_correspondem(Jogo,6).
 
+test(blocos_correspondem_parcial_acima, fail) :-
+    jogo_quadrix(Jogo, 3, 5),
+    bloco_pos(Jogo, 1, bloco(1, 9, 5, 3)),
+    bloco_pos(Jogo, 5, bloco(7, 3, 4, 8)),
+    bloco_pos(Jogo, 6, bloco(5, 4, 6, 2)),
+    % na borda esquerda do 6 tem o 5 que nao corresponde
+    % na borda superior de 6 tem o 1 que corresponde
+    % portanto o teste deve falhar pois apenas um de seus lados corresponde
+    blocos_correspondem(Jogo, 6).
+
+test(blocos_correspondem_parcial_esquerda, fail) :-
+    jogo_quadrix(Jogo, 3, 5),
+    bloco_pos(Jogo, 1, bloco(1, 9, 4, 3)),
+    bloco_pos(Jogo, 5, bloco(7, 2, 4, 8)),
+    bloco_pos(Jogo, 6, bloco(5, 4, 6, 2)),
+    % na borda esquerda do 6 tem o 5 que corresponde
+    % na borda superior de 6 tem o 1 que nao corresponde
+    % portanto o teste deve falhar pois apenas um de seus lados corresponde
+    blocos_correspondem(Jogo, 6).
 
 :- end_tests(quadrix).
 
