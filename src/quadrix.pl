@@ -36,8 +36,13 @@
 %  Verdadeiro se Jogo é um jogo quadrix válido para o conjunto Blocos.
 %  Blocos contém a lista de blocos que devem ser "colocadas" no Jogo.
 %  Chama a gera_solucao passando a posicao inicial como 0.
+%  Identifica se o tamanho da lista de Blocos informada e igual ao da
+%  nao instaciada, caso contrario ja falha
 
 solucao(Jogo, Blocos) :-
+    Jogo = quadrix(_, _, NBlocos),
+    length(NBlocos, Tam),
+    length(Blocos, Tam),
     gera_solucao(Jogo, Blocos, 0), !.
 
 %% solucao(?Jogo, +Blocos, +Pos) is semidet

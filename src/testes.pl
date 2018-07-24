@@ -38,6 +38,12 @@ test(solucao2x2) :-
 test(solucao3x3) :-
     teste_caso(teste3x3).
 
+% Testes para verificar o predicado solucao principal
+% O mesmo falta um bloco, entao o solucao principal deve identificar
+
+test(solucao2x2_fail, fail) :-
+    teste_caso(teste2x2_fail).
+
 % Testes para os demais predicados
 % Você deve escrever os testes para os novos predicados que você definir.
 
@@ -201,6 +207,12 @@ teste2x2(Blocos, 2, 2) :-
         bloco(3, 4, 7, 9),
         bloco(6, 9, 5, 4),
         bloco(7, 6, 5, 2),
+        bloco(5, 3, 6, 6)].
+
+teste2x2_fail(Blocos, 2, 2) :-
+    Blocos = [
+        bloco(3, 4, 7, 9),
+        bloco(6, 9, 5, 4),
         bloco(5, 3, 6, 6)].
 
 teste3x3(Blocos, 3, 3) :-
